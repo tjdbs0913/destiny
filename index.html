@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>운명점지소 | 이름과 사주가 점지해 주는 내 운명의 짝</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Gowun Batang (단정한 동양풍 명조체) & Pretendard -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <!-- html2canvas for saving Result Card as Image -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            serif: ['"Gowun Batang"', 'serif'],
+            brush: ['"Gowun Batang"', 'serif'],
+          },
+          colors: {
+            oriental: {
+              bg: '#161310',         // 깊은 먹색 (흑단)
+              surface: '#211c17',    // 짙은 나무결/먹지
+              card: '#2a231d',       // 보조 카드 배경
+              hanji: '#f7f3eb',      // 따뜻한 한지 미색
+              hanjiDark: '#ebe3d3',  // 한지 음영
+              vermilion: '#c83e37',  // 전통 인주/주홍색
+              gold: '#d4af37',       // 은은한 금박 포인트
+              ink: '#241e18',        // 한지 위 먹글씨
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html, body {
+      background-color: #0e0c0a;
+      color: #f4efe6;
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior-y: none;
+      overflow-x: hidden;
+      width: 100%;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Prevent iOS Safari Auto-Zoom on Input Focus (requires >= 16px) & Fix Date Alignment */
+    input[type="text"],
+    input[type="date"],
+    select {
+      font-size: 16px !important;
+      line-height: 1.4;
+    }
+    input[type="date"] {
+      -webkit-appearance: none;
+      appearance: none;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      min-height: 48px;
+    }
+    input[type="date"]::-webkit-date-and-time-value {
+      text-align: left;
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.85) sepia(0.3) saturate(2) hue-rotate(5deg);
+      opacity: 0.85;
+      cursor: pointer;
+      margin-left: auto;
+      padding: 4px;
+    }
+    /* Safe Area Padding for Mobile Notch & Home Indicator */
+    .safe-bottom {
+      padding-bottom: max(2rem, calc(env(safe-area-inset-bottom) + 1.25rem));
+    }
+    .safe-top {
+      padding-top: max(1.15rem, calc(env(safe-area-inset-top) + 0.75rem));
+    }
+    /* Oriental Paper & Lattice Patterns */
+    .oriental-lattice {
+      background-image: 
+        linear-gradient(to right, rgba(212, 175, 55, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .hanji-panel {
+      background: linear-gradient(145deg, rgba(42, 35, 29, 0.94), rgba(28, 23, 19, 0.96));
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      box-shadow: 0 10px 28px -8px rgba(0, 0, 0, 0.65);
+    }
+    .hanji-scroll {
+      background-color: #f7f3eb;
+      background-image: radial-gradient(rgba(180, 155, 115, 0.14) 1px, transparent 0);
+      background-size: 16px 16px;
+      color: #241e18;
+    }
+    .red-stamp {
+      border: 1.5px solid #c83e37;
+      color: #c83e37;
+      background-color: rgba(200, 62, 55, 0.08);
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-7px) rotate(3deg); }
+    }
+    .animate-float {
+      animation: floatSlow 2.6s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="min-h-[100dvh] flex justify-center items-start sm:items-center sm:py-6">
+
+  <!-- Mobile App Container (Max width 440px, centered, dvh adaptive) -->
+  <div id="app-container" class="w-full max-w-[440px] min-h-[100dvh] sm:min-h-[820px] sm:max-h-[900px] bg-oriental-bg oriental-lattice sm:rounded-[32px] sm:border sm:border-oriental-gold/25 shadow-2xl relative overflow-x-hidden flex flex-col justify-between">
+    
+    <!-- Subtle Warm Lantern Ambient Glows -->
+    <div class="pointer-events-none fixed sm:absolute top-[-60px] left-1/2 -translate-x-1/2 w-72 h-48 bg-amber-600/15 rounded-full blur-[70px]"></div>
+    <div class="pointer-events-none fixed sm:absolute bottom-[-50px] right-[-40px] w-56 h-56 bg-red-800/15 rounded-full blur-[70px]"></div>
+
+    <!-- Custom Toast Notification -->
+    <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 opacity-0 pointer-events-none translate-y-[-10px] w-[92%] max-w-[380px]">
+      <div class="bg-oriental-surface/95 border border-oriental-gold/50 text-oriental-hanji px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-medium backdrop-blur-md">
+        <span class="red-stamp px-1.5 py-0.5 text-[10px] font-bold rounded-sm shrink-0">알림</span>
+        <span id="toast-msg" class="leading-snug">알림 메시지</span>
+      </div>
+    </div>
+
+    <!-- Top Header -->
+    <header class="px-4 sm:px-5 safe-top pb-3 flex items-center justify-between relative z-10 border-b border-oriental-gold/15">
+      <button onclick="resetToHome()" class="flex items-center gap-2.5 text-left group active:opacity-80">
+        <div class="w-9 h-9 rounded-lg bg-oriental-vermilion border border-amber-300/40 flex items-center justify-center shadow-md shadow-red-950/50 shrink-0">
+          <span class="font-serif font-bold text-oriental-hanji text-lg leading-none">緣</span>
+        </div>
+        <div>
+          <span class="font-serif font-bold text-base tracking-wide text-oriental-hanji group-hover:text-oriental-gold transition">운명점지소</span>
+          <span class="block text-[10px] text-oriental-gold/75 -mt-0.5 tracking-wide">사주명리 · 성명학 연애점</span>
+        </div>
+      </button>
+      <div class="px-2.5 py-1 rounded-md bg-oriental-surface border border-oriental-gold/30 text-[11px] text-oriental-gold font-serif shrink-0">
+        ☯ 사주·이름 궁합
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 px-4 sm:px-5 pt-3.5 safe-bottom flex flex-col relative z-10 overflow-y-auto no-scrollbar">
+
+      <!-- ========================================== -->
+      <!-- STEP 1 & 2: MAIN & INPUT FORM VIEW         -->
+      <!-- ========================================== -->
+      <section id="view-input" class="flex flex-col space-y-3">
+        
+        <!-- Intro Title -->
+        <div class="text-center space-y-1">
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-oriental-surface border border-oriental-gold/30 text-[11px] text-oriental-gold font-serif">
+            <span>🔮 취향은 거들 뿐</span>
+          </div>
+          <h1 class="font-serif font-bold text-[20px] sm:text-[22px] text-oriental-hanji tracking-tight leading-snug">
+            이름과 사주가 점지해 주는<br/>내 운명의 짝은?
+          </h1>
+        </div>
+
+        <!-- Mode Selector Tabs -->
+        <div class="grid grid-cols-2 gap-1.5 p-1.5 rounded-xl bg-oriental-surface border border-oriental-gold/25">
+          <button type="button" id="tab-mode-a" onclick="switchMode('A')" class="min-h-[52px] py-2 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center gap-0.5 bg-oriental-vermilion text-oriental-hanji border border-amber-300/30 shadow-md active:scale-[0.98]">
+            <span>🔮 나만의 운명 찾기</span>
+            <span class="text-[10px] opacity-85 font-normal">솔로 모드</span>
+          </button>
+          <button type="button" id="tab-mode-b" onclick="switchMode('B')" class="min-h-[52px] py-2 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center gap-0.5 text-stone-400 hover:text-oriental-hanji active:scale-[0.98]">
+            <span>💞 그 사람과 사주 궁합</span>
+            <span class="text-[10px] opacity-85 font-normal">지정 모드</span>
+          </button>
+        </div>
+
+        <!-- Input Form -->
+        <form id="saju-form" onsubmit="handleSubmit(event)" class="space-y-3.5">
+          
+          <!-- My Info Card -->
+          <div class="hanji-panel rounded-2xl p-4 space-y-3.5">
+            <div class="flex items-center justify-between border-b border-oriental-gold/15 pb-2">
+              <span class="font-serif font-bold text-sm text-oriental-gold flex items-center gap-1.5">
+                <span class="red-stamp px-1.5 py-0.5 text-[10px] rounded-sm">본인</span>
+                <span>내 사주 명식</span>
+              </span>
+              <span class="text-[11px] text-stone-400">필수 입력</span>
+            </div>
+
+            <!-- Name & Gender -->
+            <div class="grid grid-cols-3 gap-2">
+              <div class="col-span-2">
+                <label class="block text-xs text-stone-300 mb-1.5 font-serif">이름 (한글)</label>
+                <input type="text" id="my-name" placeholder="예: 김지민" maxlength="10" autocomplete="off"
+                  class="w-full h-[48px] px-3 rounded-xl bg-oriental-bg/90 border border-oriental-gold/25 text-oriental-hanji placeholder-stone-500 focus:outline-none focus:border-oriental-gold transition" />
+              </div>
+              <div>
+                <label class="block text-xs text-stone-300 mb-1.5 font-serif">성별</label>
+                <select id="my-gender"
+                  class="w-full h-[48px] px-2.5 rounded-xl bg-oriental-bg/90 border border-oriental-gold/25 text-oriental-hanji focus:outline-none focus:border-oriental-gold transition">
+                  <option value="여성">여성</option>
+                  <option value="남성">남성</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Birth Date & Calendar Type -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-xs text-stone-300 font-serif">생년월일</label>
+                <div class="flex items-center gap-3 text-xs">
+                  <label class="inline-flex items-center gap-1.5 py-0.5 cursor-pointer text-stone-300">
+                    <input type="radio" name="my-cal" value="양력" checked class="w-4 h-4 accent-[#c83e37]" />
+                    <span>양력</span>
+                  </label>
+                  <label class="inline-flex items-center gap-1.5 py-0.5 cursor-pointer text-stone-300">
+                    <input type="radio" name="my-cal" value="음력" class="w-4 h-4 accent-[#c83e37]" />
+                    <span>음력</span>
+                  </label>
+                </div>
+              </div>
+              <input type="date" id="my-birth" value="1999-05-15" max="2026-12-31" min="1940-01-01"
+                class="w-full h-[48px] px-3 rounded-xl bg-oriental-bg/90 border border-oriental-gold/25 text-oriental-hanji focus:outline-none focus:border-oriental-gold transition" />
+            </div>
+
+            <!-- Birth Time -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-xs text-stone-300 font-serif">태어난 시</label>
+                <label class="inline-flex items-center gap-1.5 py-0.5 cursor-pointer text-xs text-oriental-gold">
+                  <input type="checkbox" id="my-time-unknown" onchange="toggleMyTime()" class="w-4 h-4 accent-[#c83e37] rounded" />
+                  <span>태어난 시 모름</span>
+                </label>
+              </div>
+              <select id="my-time"
+                class="w-full h-[48px] px-3 rounded-xl bg-oriental-bg/90 border border-oriental-gold/25 text-oriental-hanji disabled:opacity-40 focus:outline-none focus:border-oriental-gold transition">
+                <option value="자시 (23:30~01:29)">자시 (23:30 ~ 01:29)</option>
+                <option value="축시 (01:30~03:29)">축시 (01:30 ~ 03:29)</option>
+                <option value="인시 (03:30~05:29)">인시 (03:30 ~ 05:29)</option>
+                <option value="묘시 (05:30~07:29)">묘시 (05:30 ~ 07:29)</option>
+                <option value="진시 (07:30~09:29)">진시 (07:30 ~ 09:29)</option>
+                <option value="사시 (09:30~11:29)">사시 (09:30 ~ 11:29)</option>
+                <option value="오시 (11:30~13:29)" selected>오시 (11:30 ~ 13:29)</option>
+                <option value="미시 (13:30~15:29)">미시 (13:30 ~ 15:29)</option>
+                <option value="신시 (15:30~17:29)">신시 (15:30 ~ 17:29)</option>
+                <option value="유시 (17:30~19:29)">유시 (17:30 ~ 19:29)</option>
+                <option value="술시 (19:30~21:29)">술시 (19:30 ~ 21:29)</option>
+                <option value="해시 (21:30~23:29)">해시 (21:30 ~ 23:29)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Partner Info Card (Visible in Mode B) -->
+          <div id="partner-card" class="hidden hanji-panel rounded-2xl p-4 space-y-3.5 border-oriental-vermilion/40">
+            <div class="flex items-center justify-between border-b border-oriental-gold/15 pb-2">
+              <span class="font-serif font-bold text-sm text-oriental-vermilion flex items-center gap-1.5">
+                <span class="red-stamp px-1.5 py-0.5 text-[10px] rounded-sm">상대</span>
+                <span>그 사람의 정보</span>
+              </span>
+              <span class="text-[11px] text-stone-400">생일 몰라도 가능</span>
+            </div>
+
+            <div>
+              <label class="block text-xs text-stone-300 mb-1.5 font-serif">상대방 이름 (한글)</label>
+              <input type="text" id="partner-name" placeholder="예: 박서준" maxlength="10" autocomplete="off"
+                class="w-full h-[48px] px-3 rounded-xl bg-oriental-bg/90 border border-oriental-gold/25 text-oriental-hanji placeholder-stone-500 focus:outline-none focus:border-oriental-gold transition" />
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-xs text-stone-300 font-serif">상대방 생년월일</label>
+                <label class="inline-flex items-center gap-1.5 py-0.5 cursor-pointer text-xs text-oriental-gold">
+                  <input type="checkbox" id="partner-birth-unknown" onchange="togglePartnerBirth()" class="w-4 h-4 accent-[#c83e37] rounded" />
+                  <span>상대 생일 모름 (이름만)</span>
+                </label>
+              </div>
+              <input type="date" id="partner-birth" value="1998-08-20" max="2026-12-31" min="1940-01-01"
+                class="w-full h-[48px] px-3 rounded-xl bg-oriental-bg/90 border border-oriental-gold/25 text-oriental-hanji disabled:opacity-40 focus:outline-none focus:border-oriental-gold transition" />
+            </div>
+
+            <div>
+              <label class="block text-xs text-stone-300 mb-1.5 font-serif">상대방 태어난 시 (선택)</label>
+              <select id="partner-time"
+                class="w-full h-[48px] px-3 rounded-xl bg-oriental-bg/90 border border-oriental-gold/25 text-oriental-hanji disabled:opacity-40 focus:outline-none focus:border-oriental-gold transition">
+                <option value="모름" selected>모름 (생년월일·이름으로 분석)</option>
+                <option value="자시 (23:30~01:29)">자시 (23:30 ~ 01:29)</option>
+                <option value="축시 (01:30~03:29)">축시 (01:30 ~ 03:29)</option>
+                <option value="인시 (03:30~05:29)">인시 (03:30 ~ 05:29)</option>
+                <option value="묘시 (05:30~07:29)">묘시 (05:30 ~ 07:29)</option>
+                <option value="진시 (07:30~09:29)">진시 (07:30 ~ 09:29)</option>
+                <option value="사시 (09:30~11:29)">사시 (09:30 ~ 11:29)</option>
+                <option value="오시 (11:30~13:29)">오시 (11:30 ~ 13:29)</option>
+                <option value="미시 (13:30~15:29)">미시 (13:30 ~ 15:29)</option>
+                <option value="신시 (15:30~17:29)">신시 (15:30 ~ 17:29)</option>
+                <option value="유시 (17:30~19:29)">유시 (17:30 ~ 19:29)</option>
+                <option value="술시 (19:30~21:29)">술시 (19:30 ~ 21:29)</option>
+                <option value="해시 (21:30~23:29)">해시 (21:30 ~ 23:29)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit"
+            class="w-full min-h-[52px] py-3.5 px-5 rounded-xl bg-gradient-to-r from-[#c83e37] to-[#a92f29] hover:brightness-110 border border-amber-300/35 text-oriental-hanji font-serif font-bold text-base tracking-wide shadow-lg shadow-red-950/60 transition active:scale-[0.98]">
+            <span id="submit-btn-text">🏮 내 운명의 상대 점지받기</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- STEP 3: LOADING VIEW (3.6s Mystical Pace)  -->
+      <!-- ========================================== -->
+      <section id="view-loading" class="hidden flex-1 flex flex-col items-center justify-center text-center space-y-6 py-12">
+        <div class="relative flex items-center justify-center">
+          <div class="w-28 h-28 rounded-full border border-oriental-gold/30 animate-ping absolute opacity-25"></div>
+          <div class="w-24 h-24 rounded-full bg-oriental-surface border-2 border-oriental-gold/45 flex items-center justify-center shadow-2xl animate-float">
+            <span class="font-brush text-4xl text-oriental-vermilion">命</span>
+          </div>
+        </div>
+
+        <div class="space-y-2 max-w-[280px]">
+          <p id="loading-text" class="font-serif font-bold text-base text-oriental-gold transition-opacity duration-300">
+            만세력에서 사주팔자 원국을 뽑는 중...
+          </p>
+          <p class="text-xs text-stone-400">
+            천간·지지 오행과 이름의 발음오행을 대조하고 있어요
+          </p>
+        </div>
+
+        <!-- 3-Step Dots -->
+        <div class="flex items-center gap-2">
+          <span id="load-dot-1" class="w-2 h-2 rounded-full bg-oriental-vermilion transition-all"></span>
+          <span id="load-dot-2" class="w-2 h-2 rounded-full bg-stone-600 transition-all"></span>
+          <span id="load-dot-3" class="w-2 h-2 rounded-full bg-stone-600 transition-all"></span>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- STEP 4: RESULT VIEW (SYMMETRICAL HANJI)    -->
+      <!-- ========================================== -->
+      <section id="view-result" class="hidden flex-1 flex flex-col justify-between space-y-3.5">
+        
+        <!-- Shareable Result Card Container -->
+        <div id="capture-card" class="hanji-scroll rounded-2xl border-2 border-[#c8a96e] shadow-2xl overflow-hidden">
+          <div class="border border-[#c8a96e]/50 m-1.5 rounded-xl px-4 py-5 space-y-4">
+            
+            <!-- Card Top Header -->
+            <div class="flex items-center justify-between border-b border-[#dfd3be] pb-2.5">
+              <div class="flex items-center gap-1.5">
+                <span class="red-stamp px-1.5 py-0.5 text-[10px] font-serif font-bold rounded-sm">운명점지</span>
+                <span class="font-serif text-sm font-bold text-[#241e18]">사주·성명 점괘서</span>
+              </div>
+              <span id="res-badge" class="text-[11px] font-serif font-bold text-[#7c5832] bg-[#ebe3d3] px-2.5 py-0.5 rounded-md">
+                🏮 연분 점괘
+              </span>
+            </div>
+
+            <!-- ==================================== -->
+            <!-- MODE A RESULT CONTENT                -->
+            <!-- ==================================== -->
+            <div id="result-mode-a" class="space-y-4">
+              
+              <!-- 1. 내 사주명식 & 캐릭터 요약 -->
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-xs font-serif font-bold text-[#6e553b]">
+                    📜 <span id="res-a-myname">김지민</span>님의 사주 원국
+                  </span>
+                  <span id="res-a-element-tag" class="px-2 py-0.5 rounded bg-[#241e18] text-[#e8c56b] text-[10px] font-serif shrink-0">
+                    기묘년 기사월 갑오일
+                  </span>
+                </div>
+                <h2 id="res-a-nickname" class="font-serif font-bold text-[18px] text-[#b8322b] leading-snug pt-0.5">
+                  "겉은 단단한 바위, 속은 따뜻한 봄바람"
+                </h2>
+                <p id="res-a-my-desc" class="text-xs text-[#3f352b] leading-relaxed">
+                  갑목(甲木) 일간 특유의 곧은 심지와 추진력을 지녔습니다.
+                </p>
+              </div>
+
+              <div class="border-t border-[#dfd3be]"></div>
+
+              <!-- 2. 운명의 상대 이름 힌트 (성씨 + 초성) -->
+              <div class="space-y-2">
+                <div class="text-xs font-serif font-bold text-[#6e553b]">
+                  🏮 하늘이 점지한 인연의 성씨 · 초성
+                </div>
+                <div class="bg-[#efe9dd]/80 border border-[#dfd3be] rounded-xl px-3.5 py-2.5 flex items-center justify-between gap-2">
+                  <div id="res-a-surnames" class="flex flex-wrap items-center gap-1.5">
+                    <!-- Surnames pills injected here -->
+                  </div>
+                  <div class="flex items-center gap-1.5 shrink-0 border-l border-[#d5c7ae] pl-2.5">
+                    <span class="text-[11px] text-[#7c5832] font-serif">초성</span>
+                    <span id="res-a-initials" class="font-serif font-bold text-sm text-[#241e18] tracking-wider">ㅇ, ㅎ</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. 추천 띠 & 채워주는 용신 기운 (Equal Height Grid) -->
+              <div class="grid grid-cols-2 gap-2.5">
+                <div class="bg-[#efe9dd]/80 border border-[#dfd3be] rounded-xl p-3 flex flex-col justify-between">
+                  <span class="text-[11px] font-serif text-[#7c5832] block mb-1">찰떡궁합 추천 띠</span>
+                  <span id="res-a-zodiac" class="font-serif font-bold text-sm text-[#241e18] leading-snug">🐷 돼지띠 · 🐑 양띠</span>
+                </div>
+                <div class="bg-[#efe9dd]/80 border border-[#dfd3be] rounded-xl p-3 flex flex-col justify-between">
+                  <span class="text-[11px] font-serif text-[#7c5832] block mb-1">채워주는 용신 기운</span>
+                  <span id="res-a-fill-energy" class="font-serif font-bold text-xs text-[#1f5c3a] leading-snug">차분한 수(水)의 지혜</span>
+                </div>
+              </div>
+
+              <!-- 4. 상대방 분위기 키워드 -->
+              <div class="space-y-1.5">
+                <span class="text-[11px] font-serif text-[#7c5832] block">추정 외모 & 첫인상 키워드</span>
+                <div id="res-a-keywords" class="flex flex-wrap gap-1.5">
+                  <!-- Keywords injected here -->
+                </div>
+              </div>
+
+              <div class="border-t border-[#dfd3be]"></div>
+
+              <!-- 5. 만남 점괘 & 상극 경고 -->
+              <div class="space-y-2.5 text-xs">
+                <div class="flex items-start gap-2">
+                  <span class="shrink-0 font-serif font-bold text-[#7c5832]">📍 인연시기</span>
+                  <p id="res-a-meeting" class="text-[#3f352b] leading-relaxed">...</p>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="shrink-0 font-serif font-bold text-[#b8322b]">⚠️ 상극주의</span>
+                  <p id="res-a-clash" class="text-[#5c2b28] leading-relaxed">...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ==================================== -->
+            <!-- MODE B RESULT CONTENT                -->
+            <!-- ==================================== -->
+            <div id="result-mode-b" class="hidden space-y-4">
+              
+              <!-- Couple Names & Score -->
+              <div class="text-center space-y-1.5">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#efe9dd] border border-[#dfd3be] text-xs font-serif font-bold text-[#241e18]">
+                  <span id="res-b-myname">김지민</span>
+                  <span class="text-[#c83e37]">♥</span>
+                  <span id="res-b-partnername">박서준</span>
+                </div>
+
+                <div class="flex items-baseline justify-center gap-1 pt-1">
+                  <span id="res-b-score" class="font-serif text-4xl font-bold text-[#b8322b]">89</span>
+                  <span class="text-sm font-serif font-bold text-[#7c5832]">점</span>
+                </div>
+
+                <p id="res-b-headline" class="font-serif font-bold text-sm text-[#241e18] leading-snug">
+                  "부족한 오행을 서로 메워주는 천생연분!"
+                </p>
+              </div>
+
+              <div class="border-t border-[#dfd3be]"></div>
+
+              <!-- Synergy Details -->
+              <div class="space-y-3 text-xs">
+                <div class="bg-[#efe9dd]/80 border border-[#dfd3be] rounded-xl p-3 space-y-1">
+                  <div class="font-serif font-bold text-[#7c5832]">🔤 이름 발음오행 시너지</div>
+                  <p id="res-b-name-synergy" class="text-[#3f352b] leading-relaxed">...</p>
+                </div>
+
+                <div class="bg-[#efe9dd]/80 border border-[#dfd3be] rounded-xl p-3 space-y-1">
+                  <div id="res-b-chemi-title" class="font-serif font-bold text-[#1f5c3a]">☯ 사주 오행 보완 케미</div>
+                  <p id="res-b-saju-chemi" class="text-[#3f352b] leading-relaxed">...</p>
+                </div>
+
+                <div class="flex items-start gap-2 pt-0.5">
+                  <span class="shrink-0 font-serif font-bold text-[#b8322b]">⚡ 현실주의</span>
+                  <p id="res-b-caution" class="text-[#5c2b28] leading-relaxed">...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer Stamp -->
+            <div class="pt-2.5 border-t border-[#dfd3be] flex items-center justify-between text-[10px] text-[#8c7355] font-serif">
+              <span>이름과 사주가 점지한 연분</span>
+              <span class="text-[#b8322b] font-bold tracking-wider">운명점지소 印</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Bottom Action Buttons Group -->
+        <div class="space-y-2.5 pt-1">
+          <!-- Mode A -> Mode B Conversion CTA Button -->
+          <button id="cta-to-mode-b" onclick="transitionToModeB()" class="hidden w-full min-h-[48px] py-3 px-4 rounded-xl bg-oriental-surface hover:bg-oriental-card border border-oriental-gold/45 text-oriental-gold font-serif font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-1.5 transition active:scale-[0.98]">
+            <span>내 짝사랑/최애 이름 넣고 실제 궁합 확인하기 👉</span>
+          </button>
+
+          <!-- Common Action Buttons -->
+          <div class="grid grid-cols-2 gap-2.5">
+            <button onclick="downloadResultCard()" class="min-h-[48px] py-3 px-3 rounded-xl bg-oriental-vermilion hover:brightness-110 border border-amber-300/30 text-oriental-hanji font-serif font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-md transition active:scale-[0.98]">
+              <i data-lucide="share-2" class="w-4 h-4"></i>
+              <span>점괘서 저장·공유</span>
+            </button>
+            <button onclick="resetToHome()" class="min-h-[48px] py-3 px-3 rounded-xl bg-oriental-surface hover:bg-oriental-card border border-oriental-gold/30 text-oriental-hanji font-serif font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition active:scale-[0.98]">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              <span>다시 점치기</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Global App State
+    let currentMode = 'A'; // 'A' = Solo Destiny, 'B' = Couple Compatibility
+    let savedUserData = null;
+
+    // UI Helper: Switch Mode ('A' or 'B')
+    function switchMode(mode) {
+      currentMode = mode;
+      const tabA = document.getElementById('tab-mode-a');
+      const tabB = document.getElementById('tab-mode-b');
+      const partnerCard = document.getElementById('partner-card');
+      const submitText = document.getElementById('submit-btn-text');
+
+      if (mode === 'A') {
+        tabA.className = "min-h-[52px] py-2 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center gap-0.5 bg-oriental-vermilion text-oriental-hanji border border-amber-300/30 shadow-md active:scale-[0.98]";
+        tabB.className = "min-h-[52px] py-2 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center gap-0.5 text-stone-400 hover:text-oriental-hanji active:scale-[0.98]";
+        partnerCard.classList.add('hidden');
+        submitText.textContent = "🏮 내 운명의 상대 점지받기";
+      } else {
+        tabB.className = "min-h-[52px] py-2 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center gap-0.5 bg-oriental-vermilion text-oriental-hanji border border-amber-300/30 shadow-md active:scale-[0.98]";
+        tabA.className = "min-h-[52px] py-2 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center gap-0.5 text-stone-400 hover:text-oriental-hanji active:scale-[0.98]";
+        partnerCard.classList.remove('hidden');
+        submitText.textContent = "🪢 두 사람의 사주·이름 궁합 보기";
+      }
+    }
+
+    // UI Helper: Toggle My Birth Time Unknown
+    function toggleMyTime() {
+      const isUnknown = document.getElementById('my-time-unknown').checked;
+      document.getElementById('my-time').disabled = isUnknown;
+    }
+
+    // UI Helper: Toggle Partner Birth Date Unknown
+    function togglePartnerBirth() {
+      const isUnknown = document.getElementById('partner-birth-unknown').checked;
+      document.getElementById('partner-birth').disabled = isUnknown;
+      document.getElementById('partner-time').disabled = isUnknown;
+    }
+
+    // UI Helper: Show View ('input' | 'loading' | 'result')
+    function showView(viewName) {
+      document.getElementById('view-input').classList.add('hidden');
+      document.getElementById('view-loading').classList.add('hidden');
+      document.getElementById('view-result').classList.add('hidden');
+      document.getElementById(`view-${viewName}`).classList.remove('hidden');
+      document.querySelector('main').scrollTop = 0;
+    }
+
+    // UI Helper: Reset to Home Form
+    function resetToHome() {
+      showView('input');
+    }
+
+    // UI Helper: Transition from Mode A Result to Mode B Partner Input (preserving user data)
+    function transitionToModeB() {
+      switchMode('B');
+      showView('input');
+      setTimeout(() => {
+        const partnerInput = document.getElementById('partner-name');
+        partnerInput.value = '';
+        partnerInput.focus();
+      }, 150);
+    }
+
+    // UI Helper: Show Custom Toast Message
+    let toastTimer = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.textContent = msg;
+      toast.classList.remove('opacity-0', 'translate-y-[-10px]', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-[-10px]', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2800);
+    }
+
+    // =========================================================================
+    // DETERMINISTIC TRADITIONAL SAJU (만세력 60갑자) & SEONGMYEONGHAK ENGINE
+    // Guarantees 100% identical, authentic Saju & Phonetic Five-Element output
+    // =========================================================================
+
+    const CHEONGAN = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+    const CHEONGAN_HANJA = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    const CHEONGAN_ELEMENT = ['목', '목', '화', '화', '토', '토', '금', '금', '수', '수'];
+
+    const JIJI = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
+    const JIJI_HANJA = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    const JIJI_ELEMENT = ['수', '토', '목', '목', '토', '화', '화', '토', '금', '금', '토', '수'];
+    const ZODIAC_ANIMALS = [
+      '🐭 쥐띠', '🐮 소띠', '🐯 호랑이띠', '🐰 토끼띠',
+      '🐲 용띠', '🐍 뱀띠', '🐴 말띠', '🐑 양띠',
+      '🐵 원숭이띠', '🐔 닭띠', '🐶 개띠', '🐷 돼지띠'
+    ];
+
+    const ELEMENT_INFO = {
+      '목': {
+        hanja: '木',
+        label: '목(木)',
+        generates: '화',      // 목생화
+        generatedBy: '수',    // 수생목
+        controls: '토',       // 목극토
+        controlledBy: '금',   // 금극목
+        surnames: ['김', '권', '강', '고', '구', '곽'],
+        initials: 'ㄱ, ㅋ',
+        trait: '푸른 나무처럼 곧은 심지와 생명력을 품은 성장형 기운',
+        fillDesc: '생명력을 불어넣는 목(木)의 추진력'
+      },
+      '화': {
+        hanja: '火',
+        label: '화(火)',
+        generates: '토',      // 화생토
+        generatedBy: '목',    // 목생화
+        controls: '금',       // 화극금
+        controlledBy: '수',   // 수극화
+        surnames: ['남', '노', '나', '류', '임', '도'],
+        initials: 'ㄴ, ㄷ, ㄹ',
+        trait: '타오르는 태양처럼 솔직하고 열정적인 표현력의 기운',
+        fillDesc: '분위기를 밝히는 화(火)의 온기'
+      },
+      '토': {
+        hanja: '土',
+        label: '토(土)',
+        generates: '금',      // 토생금
+        generatedBy: '화',    // 화생토
+        controls: '수',       // 토극수
+        controlledBy: '목',   // 목극토
+        surnames: ['안', '양', '오', '윤', '유', '황', '한', '허'],
+        initials: 'ㅇ, ㅎ',
+        trait: '넓은 대지처럼 포용력이 깊고 듬직한 신뢰의 기운',
+        fillDesc: '마음을 편안히 감싸는 토(土)의 안정감'
+      },
+      '금': {
+        hanja: '金',
+        label: '금(金)',
+        generates: '수',      // 금생수
+        generatedBy: '토',    // 토생금
+        controls: '목',       // 금극목
+        controlledBy: '화',   // 화극금
+        surnames: ['서', '송', '신', '손', '성', '정', '조', '장', '최', '차'],
+        initials: 'ㅅ, ㅈ, ㅊ',
+        trait: '잘 벼려진 보석처럼 맺고 끊음이 분명하고 세련된 기운',
+        fillDesc: '중심을 단단히 잡아주는 금(金)의 결단력'
+      },
+      '수': {
+        hanja: '水',
+        label: '수(水)',
+        generates: '목',      // 수생목
+        generatedBy: '금',    // 금생수
+        controls: '화',       // 수극화
+        controlledBy: '토',   // 토극수
+        surnames: ['박', '배', '백', '변', '문', '민', '마'],
+        initials: 'ㅁ, ㅂ, ㅍ',
+        trait: '깊은 바다처럼 지혜롭고 유연하게 스며드는 통찰의 기운',
+        fillDesc: '차분히 스며드는 수(水)의 유연함'
+      }
+    };
+
+    const CHOSUNG_LIST = [
+      'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ',
+      'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+    ];
+
+    // 훈민정음 발음오행 매핑 (아음=목, 설음=화, 후음=토, 치음=금, 순음=수)
+    function getChosungElement(ch) {
+      if ('ㄱㄲㅋ'.includes(ch)) return '목';
+      if ('ㄴㄷㄸㄹㅌ'.includes(ch)) return '화';
+      if ('ㅇㅎ'.includes(ch)) return '토';
+      if ('ㅅㅆㅈㅉㅊ'.includes(ch)) return '금';
+      if ('ㅁㅂㅃㅍ'.includes(ch)) return '수';
+      return '토';
+    }
+
+    // Analyze Korean Name Phonetic Five Elements (발음오행)
+    function analyzeNamePhonetics(name) {
+      const clean = (name || '').replace(/[^가-힣]/g, '');
+      const initials = [];
+      const elements = [];
+      for (let i = 0; i < clean.length; i++) {
+        const code = clean.charCodeAt(i) - 0xAC00;
+        if (code >= 0 && code <= 11171) {
+          const chosungIdx = Math.floor(code / 588);
+          const ch = CHOSUNG_LIST[chosungIdx];
+          initials.push(ch);
+          elements.push(getChosungElement(ch));
+        }
+      }
+      return {
+        cleanName: clean || name,
+        initials,
+        elements,
+        firstElement: elements[0] || '토',
+        lastElement: elements[elements.length - 1] || '토'
+      };
+    }
+
+    // Deterministic Hash for selecting stable copy variants from exact Saju keys
+    function stableHash(str) {
+      let hash = 2166136261;
+      for (let i = 0; i < str.length; i++) {
+        hash ^= str.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
+      }
+      return Math.abs(hash >>> 0);
+    }
+
+    // Calculate Real 60-Gapja Four Pillars (만세력 년주·월주·일주·시주)
+    function calculateSajuPillars(birthStr, calType, timeStr) {
+      const [yRaw, mRaw, dRaw] = birthStr.split('-').map(Number);
+      let dateObj = new Date(Date.UTC(yRaw, mRaw - 1, dRaw));
+
+      // Approximate lunar-to-solar offset (~29 days) if Lunar calendar is chosen
+      if (calType === '음력') {
+        dateObj = new Date(dateObj.getTime() + 29 * 86400000);
+      }
+
+      const y = dateObj.getUTCFullYear();
+      const m = dateObj.getUTCMonth() + 1;
+      const d = dateObj.getUTCDate();
+
+      // 1. Year Pillar (년주 - 입춘 기준 2월 4일 전후 보정)
+      const sajuYear = (m === 1 || (m === 2 && d < 4)) ? y - 1 : y;
+      const yearGanIdx = ((sajuYear - 4) % 10 + 10) % 10;
+      const yearJiIdx = ((sajuYear - 4) % 12 + 12) % 12;
+
+      // 2. Month Pillar (월주 - 절기 기준 월지 및 년간에 따른 월간 도출)
+      // 절기 근사 기준: 2월(인월=2), 3월(묘월=3), ..., 1월(축월=1)
+      const solarMonthOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0]; // Jan=축(1), Feb=인(2)...
+      let monthJiIdx = solarMonthOrder[m - 1];
+      if (d < 5) {
+        monthJiIdx = (monthJiIdx + 11) % 12;
+      }
+      // 월간 공식: 갑기년 병인월 시작(2), 을경년 무인월(4), 병신년 경인월(6), 정임년 임인월(8), 무계년 갑인월(0)
+      const monthStemStart = ((yearGanIdx % 5) * 2 + 2) % 10;
+      const monthOffsetFromIn = (monthJiIdx - 2 + 12) % 12;
+      const monthGanIdx = (monthStemStart + monthOffsetFromIn) % 10;
+
+      // 3. Day Pillar (일주 - 기준일 1900-01-01 = 갑술일(천간0, 지지10) 기준 정확한 경과일수 계산)
+      const baseUtc = Date.UTC(1900, 0, 1);
+      const diffDays = Math.floor((dateObj.getTime() - baseUtc) / 86400000);
+      const dayGanIdx = ((0 + diffDays) % 10 + 10) % 10;
+      const dayJiIdx = ((10 + diffDays) % 12 + 12) % 12;
+
+      // 4. Hour Pillar (시주 - 선택된 12지지 기준 시간 도출)
+      let hourGanIdx = null;
+      let hourJiIdx = null;
+      if (timeStr && timeStr !== '모름') {
+        const jijiChar = timeStr.charAt(0);
+        const foundJi = JIJI.indexOf(jijiChar);
+        if (foundJi !== -1) {
+          hourJiIdx = foundJi;
+          // 시간 공식: 갑기일 갑자시(0), 을경일 병자시(2), 병신일 무자시(4), 정임일 경자시(6), 무계일 임자시(8)
+          const hourStemStart = (dayGanIdx % 5) * 2;
+          hourGanIdx = (hourStemStart + hourJiIdx) % 10;
+        }
+      }
+
+      // Count Five Elements distribution across pillars
+      const counts = { '목': 0, '화': 0, '토': 0, '금': 0, '수': 0 };
+      counts[CHEONGAN_ELEMENT[yearGanIdx]] += 1;
+      counts[JIJI_ELEMENT[yearJiIdx]] += 1;
+      counts[CHEONGAN_ELEMENT[monthGanIdx]] += 1;
+      counts[JIJI_ELEMENT[monthJiIdx]] += 1.5; // 월지(계절 기운) 가중치
+      counts[CHEONGAN_ELEMENT[dayGanIdx]] += 1.5; // 일간(나 자신) 가중치
+      counts[JIJI_ELEMENT[dayJiIdx]] += 1;
+
+      if (hourGanIdx !== null && hourJiIdx !== null) {
+        counts[CHEONGAN_ELEMENT[hourGanIdx]] += 1;
+        counts[JIJI_ELEMENT[hourJiIdx]] += 1;
+      }
+
+      // Determine Day Master (일간) & Lacking Element (용신)
+      const dayMasterGan = CHEONGAN[dayGanIdx];
+      const dayMasterHanja = CHEONGAN_HANJA[dayGanIdx];
+      const dayMasterElement = CHEONGAN_ELEMENT[dayGanIdx];
+
+      // Find weakest element (용신)
+      let yongsin = ELEMENT_INFO[dayMasterElement].generatedBy; // Default 인성
+      let minVal = 999;
+      for (const el of ['목', '화', '토', '금', '수']) {
+        if (counts[el] < minVal) {
+          minVal = counts[el];
+          yongsin = el;
+        }
+      }
+
+      // Find strongest element
+      let strongest = dayMasterElement;
+      let maxVal = -1;
+      for (const el of ['목', '화', '토', '금', '수']) {
+        if (counts[el] > maxVal) {
+          maxVal = counts[el];
+          strongest = el;
+        }
+      }
+
+      // Compatible Zodiacs via 삼합(Samhap) & 육합(Yukhap) of Year/Day Branch
+      const samhap1 = (yearJiIdx + 4) % 12;
+      const samhap2 = (yearJiIdx + 8) % 12;
+      const yukhapMap = [1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2];
+      const yukhap = yukhapMap[yearJiIdx];
+
+      const compatibleZodiacs = [ZODIAC_ANIMALS[samhap1], ZODIAC_ANIMALS[yukhap]];
+      if (compatibleZodiacs[0] === compatibleZodiacs[1]) {
+        compatibleZodiacs[1] = ZODIAC_ANIMALS[samhap2];
+      }
+
+      const pillarSummary = hourGanIdx !== null
+        ? `${CHEONGAN[yearGanIdx]}${JIJI[yearJiIdx]}년 ${CHEONGAN[monthGanIdx]}${JIJI[monthJiIdx]}월 ${CHEONGAN[dayGanIdx]}${JIJI[dayJiIdx]}일 ${CHEONGAN[hourGanIdx]}${JIJI[hourJiIdx]}시`
+        : `${CHEONGAN[yearGanIdx]}${JIJI[yearJiIdx]}년 ${CHEONGAN[monthGanIdx]}${JIJI[monthJiIdx]}월 ${CHEONGAN[dayGanIdx]}${JIJI[dayJiIdx]}일`;
+
+      return {
+        pillarSummary,
+        yearGanIdx, yearJiIdx,
+        monthGanIdx, monthJiIdx,
+        dayGanIdx, dayJiIdx,
+        hourGanIdx, hourJiIdx,
+        dayMasterGan,
+        dayMasterHanja,
+        dayMasterElement,
+        yongsin,
+        strongest,
+        counts,
+        myZodiac: ZODIAC_ANIMALS[yearJiIdx],
+        compatibleZodiacs
+      };
+    }
+
+    // Generate Complete Deterministic Saju & Seongmyeonghak Result
+    function generateDeterministicReading(mode, user, partner) {
+      const userNameInfo = analyzeNamePhonetics(user.name);
+      const userSaju = calculateSajuPillars(
+        user.birth,
+        user.calType,
+        user.timeUnknown ? '모름' : user.time
+      );
+
+      // Unique deterministic key for identical inputs
+      const inputSignature = mode === 'A'
+        ? `A|${userNameInfo.cleanName}|${user.gender}|${user.birth}|${user.calType}|${user.timeUnknown ? '모름' : user.time}`
+        : `B|${userNameInfo.cleanName}|${user.gender}|${user.birth}|${user.calType}|${user.timeUnknown ? '모름' : user.time}|${partner.name.trim()}|${partner.birthUnknown ? '모름' : partner.birth}|${partner.birthUnknown ? '모름' : partner.time}`;
+
+      const h = stableHash(inputSignature);
+
+      if (mode === 'A') {
+        const dmEl = userSaju.dayMasterElement;
+        const yongEl = userSaju.yongsin;
+        const nameEl = userNameInfo.lastElement;
+        // Blend Yongsin element and Name-supporting element for surname & initial recommendation
+        const targetNameEl = ELEMENT_INFO[nameEl].generates;
+
+        const yongSurnames = ELEMENT_INFO[yongEl].surnames;
+        const supportSurnames = ELEMENT_INFO[targetNameEl].surnames;
+        const s1 = yongSurnames[h % yongSurnames.length];
+        const s2 = supportSurnames[(h >> 3) % supportSurnames.length];
+        const s3 = yongSurnames[(h + 2) % yongSurnames.length];
+        const recommendedSurnames = Array.from(new Set([s1, s2, s3])).slice(0, 3);
+
+        const recommendedInitials = `${ELEMENT_INFO[yongEl].initials.split(', ')[0]}, ${ELEMENT_INFO[targetNameEl].initials.split(', ')[0]}`;
+
+        const nicknamesByElement = {
+          '목': [
+            '겉은 단단한 대나무, 속은 따뜻한 봄바람',
+            '한 번 마음 주면 끝까지 직진하는 순정파',
+            '싱그러운 에너지로 주변을 밝히는 매력캐'
+          ],
+          '화': [
+            '시원시원한 직진 매력, 숨길 수 없는 도화살',
+            '따뜻한 온기로 상대의 마음을 녹이는 태양',
+            '감각적이고 센스 넘치는 분위기 메이커'
+          ],
+          '토': [
+            '묵묵히 곁을 지키는 믿음직한 연애 강자',
+            '포근한 안정감으로 의지하게 만드는 힐러',
+            '겉은 차분하지만 내 사람에겐 한없이 다정한 타입'
+          ],
+          '금': [
+            '겉은 시크한 도시파, 속은 의리 넘치는 순애보',
+            '확실한 취향과 세련된 아우라의 소유자',
+            '깔끔한 매너로 은근히 시선을 끄는 매력남녀'
+          ],
+          '수': [
+            '깊은 눈빛과 센스로 마음을 읽는 연애 고수',
+            '차분한 지성과 반전 다정함을 품은 매력캐',
+            '은은하게 스며들어 빠져나올 수 없는 바다 같은 사람'
+          ]
+        };
+
+        const keywordsPool = {
+          '목': ['#청량한분위기', '#다정한미소', '#깔끔한스타일', '#든든한어깨', '#선한눈매'],
+          '화': ['#화사한첫인상', '#센스만점대화', '#훈훈한비주얼', '#에너지뿜뿜', '#트렌디한감각'],
+          '토': ['#포근한아우라', '#선한인상', '#믿음직한포스', '#차분한중저음', '#편안한매력'],
+          '금': ['#세련된미니멀룩', '#뚜렷한이목구비', '#지적인안경st', '#깔끔한매너', '#시크한첫인상'],
+          '수': ['#깊은눈빛', '#부드러운인상', '#여유로운분위기', '#섬세한배려', '#감성적인무드']
+        };
+
+        const meetingFortunes = [
+          `사주 원국에 ${ELEMENT_INFO[yongEl].label} 기운이 들어오는 계절, 지인의 소개나 소규모 모임에서 자연스럽게 눈이 마주칠 운명입니다.`,
+          `평소 즐겨 찾던 카페나 전시·취미 공간에서 공통 관심사를 계기로 빠르게 가까워질 기운이 강합니다.`,
+          `예상치 못한 일상 속 이동이나 약속 자리에서 첫인상부터 유독 편안하게 느껴지는 인연이 찾아옵니다.`
+        ];
+
+        const clashWarnings = [
+          `사소한 자존심 싸움으로 감정 소모를 유발하는 ${ELEMENT_INFO[ELEMENT_INFO[dmEl].controlledBy].label} 기운 과다 유형은 피하는 것이 좋습니다.`,
+          `말과 행동이 다르고 변덕이 심해 안정감을 흔드는 타입은 초반에 거리를 두는 편이 이롭습니다.`,
+          `내 에너지를 일방적으로 뺏어가며 감정 기복이 큰 상대와는 연애 피로도가 높아질 수 있습니다.`
+        ];
+
+        const timeNote = user.timeUnknown
+          ? '시주(태어난 시간)를 제외한 삼주(년·월·일주)와 이름 발음오행을 기준으로 풀이했습니다. '
+          : '';
+
+        const myNickname = nicknamesByElement[dmEl][h % 3];
+        const myDescription = `${timeNote}${userSaju.dayMasterGan}${ELEMENT_INFO[dmEl].label} 일간으로 ${ELEMENT_INFO[dmEl].trait}을 지녔으며, 사주에 부족한 ${ELEMENT_INFO[yongEl].label} 기운을 채워주는 상대와 만날 때 연애운이 크게 트입니다.`;
+
+        const kwList = keywordsPool[yongEl];
+        const appearanceKeywords = [
+          kwList[h % kwList.length],
+          kwList[(h + 1) % kwList.length],
+          kwList[(h + 2) % kwList.length],
+          kwList[(h + 3) % kwList.length]
+        ];
+
+        return {
+          myElementTag: userSaju.pillarSummary,
+          myNickname,
+          myDescription,
+          recommendedSurnames,
+          recommendedInitials,
+          recommendedZodiac: userSaju.compatibleZodiacs.join(' · '),
+          fillEnergy: ELEMENT_INFO[yongEl].fillDesc,
+          appearanceKeywords,
+          meetingFortune: meetingFortunes[h % meetingFortunes.length],
+          clashWarning: clashWarnings[(h >> 2) % clashWarnings.length]
+        };
+
+      } else {
+        // MODE B: Couple Compatibility (Deterministic Saju + Phonetic Five Elements)
+        const partnerNameInfo = analyzeNamePhonetics(partner.name);
+
+        // 1. Name Phonetic Five Elements Synergy (성명학 발음오행 상생/비화/상극 계산)
+        const uEl = userNameInfo.lastElement;
+        const pEl = partnerNameInfo.firstElement;
+        let nameScore = 76;
+        let nameSynergy = '';
+
+        if (ELEMENT_INFO[uEl].generates === pEl || ELEMENT_INFO[pEl].generates === uEl) {
+          nameScore = 92 + (h % 6);
+          nameSynergy = `${userNameInfo.cleanName}(${userNameInfo.initials.join('·')}, ${ELEMENT_INFO[uEl].label})과 ${partnerNameInfo.cleanName}(${partnerNameInfo.initials.join('·')}, ${ELEMENT_INFO[pEl].label})의 이름 초성이 서로 생(生)해주는 상생 구조라 대화가 막힘없이 통하고 함께할수록 시너지가 커집니다.`;
+        } else if (uEl === pEl) {
+          nameScore = 84 + (h % 6);
+          nameSynergy = `두 이름 모두 ${ELEMENT_INFO[uEl].label} 발음 기운을 품은 비화(比和) 조합으로, 가치관과 취향이 닮아 처음 만나도 오랜 친구처럼 편안한 호흡을 자랑합니다.`;
+        } else {
+          nameScore = 74 + (h % 7);
+          nameSynergy = `${userNameInfo.cleanName}(${ELEMENT_INFO[uEl].label})과 ${partnerNameInfo.cleanName}(${ELEMENT_INFO[pEl].label})의 이름 기운이 서로 다른 매력을 자극해, 각자에게 없는 시각을 열어주는 톡톡 튀는 케미를 만듭니다.`;
+        }
+
+        if (partner.birthUnknown) {
+          // Name-Only Compatibility Mode
+          const finalScore = Math.min(98, Math.max(72, nameScore));
+          const headlines = [
+            '이름 초성부터 서로를 끌어당기는 자석 같은 케미!',
+            '부르면 부를수록 기운이 살아나는 찰떡 이름 궁합!',
+            '서로 다른 매력으로 묘하게 자꾸 신경 쓰이는 인연!'
+          ];
+
+          return {
+            score: finalScore,
+            headline: headlines[h % headlines.length],
+            nameSynergy,
+            chemiTitle: '✨ 이름 음양오행 기운 케미 (생일 미입력)',
+            sajuChemistry: `상대방 생년월일 없이 두 사람의 성명학 기운을 풀이한 결과, ${userSaju.dayMasterGan}${ELEMENT_INFO[userSaju.dayMasterElement].label} 일간인 ${userNameInfo.cleanName}님에게 ${partnerNameInfo.cleanName}님의 이름 속 ${ELEMENT_INFO[partnerNameInfo.lastElement].label} 기운이 기분 좋은 활력을 불어넣어 줍니다.`,
+            cautionPoint: '서로의 속마음을 지레짐작하기보다 솔직한 표현 한마디를 더해주면 오해 없이 훨씬 가까워집니다.'
+          };
+        } else {
+          // Full Saju + Name Compatibility Mode
+          const partnerSaju = calculateSajuPillars(
+            partner.birth,
+            '양력',
+            partner.time || '모름'
+          );
+
+          let sajuScore = 78;
+          // Check Day Master Stem Combination (천간합: 갑기, 을경, 병신, 정임, 무계)
+          const isCheonganHap = Math.abs(userSaju.dayGanIdx - partnerSaju.dayGanIdx) === 5;
+          // Check Day Branch Harmony (일지 삼합/육합)
+          const yukhapMap = [1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2];
+          const isIljiHap = (
+            yukhapMap[userSaju.dayJiIdx] === partnerSaju.dayJiIdx ||
+            (userSaju.dayJiIdx + 4) % 12 === partnerSaju.dayJiIdx ||
+            (userSaju.dayJiIdx + 8) % 12 === partnerSaju.dayJiIdx
+          );
+          // Check if partner's strongest element matches user's lacking Yongsin
+          const fillsYongsin = (partnerSaju.strongest === userSaju.yongsin || userSaju.strongest === partnerSaju.yongsin);
+
+          if (isCheonganHap) sajuScore += 12;
+          if (isIljiHap) sajuScore += 8;
+          if (fillsYongsin) sajuScore += 7;
+
+          const finalScore = Math.min(99, Math.max(70, Math.round((nameScore * 0.4) + (sajuScore * 0.6))));
+
+          const harmonyReason = isCheonganHap
+            ? `두 사람의 일간(${userSaju.dayMasterGan}${ELEMENT_INFO[userSaju.dayMasterElement].label} · ${partnerSaju.dayMasterGan}${ELEMENT_INFO[partnerSaju.dayMasterElement].label})이 천간합(天干合)을 이루어 첫눈에 끌리는 인연입니다.`
+            : fillsYongsin
+              ? `${userNameInfo.cleanName}님 사주에 필요한 ${ELEMENT_INFO[userSaju.yongsin].label} 기운을 ${partnerNameInfo.cleanName}님이 풍부하게 품고 있어 서로의 빈틈을 채워줍니다.`
+              : `${userSaju.dayMasterGan}${ELEMENT_INFO[userSaju.dayMasterElement].label} 일간과 ${partnerSaju.dayMasterGan}${ELEMENT_INFO[partnerSaju.dayMasterElement].label} 일간이 만나 서로의 장점을 살려주는 안정적인 흐름입니다.`;
+
+          const headline = finalScore >= 90
+            ? '사주와 이름 모두 서로를 채워주는 천생연분 궁합!'
+            : finalScore >= 82
+              ? '함께할수록 부족한 오행이 채워지는 알콩달콩 케미!'
+              : '서로 다른 온도가 만나 묘한 설렘을 만드는 매력 궁합!';
+
+          const cautions = [
+            '둘 다 자존심을 굽히지 않고 고집을 부릴 때만 한 발짝 양보하면 다툴 일이 거의 없습니다.',
+            '연락 빈도나 감정 표현 방식의 차이를 인정해 주면 신뢰가 두 배로 단단해집니다.',
+            '서운한 점이 생겼을 때 묵혀두지 말고 그날 바로 부드럽게 풀고 넘어가는 것이 핵심입니다.'
+          ];
+
+          return {
+            score: finalScore,
+            headline,
+            nameSynergy,
+            chemiTitle: `☯ 사주 오행 케미 (${userSaju.dayMasterGan}${ELEMENT_INFO[userSaju.dayMasterElement].label} × ${partnerSaju.dayMasterGan}${ELEMENT_INFO[partnerSaju.dayMasterElement].label})`,
+            sajuChemistry: `${harmonyReason} (${userSaju.myZodiac} · ${partnerSaju.myZodiac} 조합)`,
+            cautionPoint: cautions[h % cautions.length]
+          };
+        }
+      }
+    }
+
+    // Handle Form Submission with 3.6s Mystical Fortune-Telling Pace
+    function handleSubmit(e) {
+      e.preventDefault();
+
+      const myName = document.getElementById('my-name').value.trim();
+      const myGender = document.getElementById('my-gender').value;
+      const myBirth = document.getElementById('my-birth').value;
+      const myCal = document.querySelector('input[name="my-cal"]:checked').value;
+      const myTimeUnknown = document.getElementById('my-time-unknown').checked;
+      const myTime = document.getElementById('my-time').value;
+
+      if (!myName || !/[가-힣]/.test(myName)) {
+        showToast("본인 이름을 한글로 정확히 입력해 주세요!");
+        document.getElementById('my-name').focus();
+        return;
+      }
+      if (!myBirth) {
+        showToast("본인 생년월일을 선택해 주세요!");
+        return;
+      }
+
+      let partnerData = null;
+      if (currentMode === 'B') {
+        const partnerName = document.getElementById('partner-name').value.trim();
+        const partnerBirthUnknown = document.getElementById('partner-birth-unknown').checked;
+        const partnerBirth = document.getElementById('partner-birth').value;
+        const partnerTime = document.getElementById('partner-time').value;
+
+        if (!partnerName || !/[가-힣]/.test(partnerName)) {
+          showToast("상대방 이름을 한글로 입력해 주세요!");
+          document.getElementById('partner-name').focus();
+          return;
+        }
+        if (!partnerBirthUnknown && !partnerBirth) {
+          showToast("상대방 생년월일을 입력하거나 '상대 생일 모름'을 체크해 주세요!");
+          return;
+        }
+
+        partnerData = {
+          name: partnerName,
+          birthUnknown: partnerBirthUnknown,
+          birth: partnerBirth,
+          time: partnerTime
+        };
+      }
+
+      savedUserData = {
+        name: myName,
+        gender: myGender,
+        birth: myBirth,
+        calType: myCal,
+        timeUnknown: myTimeUnknown,
+        time: myTime
+      };
+
+      // Show Loading View & Run 3-Stage 3.6s Mystical Reading Sequence
+      showView('loading');
+      const loadingTextEl = document.getElementById('loading-text');
+      const dot1 = document.getElementById('load-dot-1');
+      const dot2 = document.getElementById('load-dot-2');
+      const dot3 = document.getElementById('load-dot-3');
+
+      const steps = currentMode === 'A'
+        ? [
+            "만세력에서 사주팔자 원국을 뽑는 중...",
+            "이름 초성의 훈민정음 발음오행을 분석하는 중...",
+            "부족한 용신을 채워줄 천생연분을 점지하는 중..."
+          ]
+        : [
+            "두 사람의 사주 원국과 일간을 대조하는 중...",
+            "이름 초성·모음의 음양오행 상생을 살피는 중...",
+            "둘 사이의 인연 점수와 궁합 점괘서를 적는 중..."
+          ];
+
+      // Step 1 (0.0s)
+      loadingTextEl.textContent = steps[0];
+      dot1.className = "w-2.5 h-2.5 rounded-full bg-oriental-vermilion transition-all";
+      dot2.className = "w-2 h-2 rounded-full bg-stone-600 transition-all";
+      dot3.className = "w-2 h-2 rounded-full bg-stone-600 transition-all";
+
+      // Step 2 (1.2s)
+      setTimeout(() => {
+        loadingTextEl.textContent = steps[1];
+        dot1.className = "w-2 h-2 rounded-full bg-oriental-gold/60 transition-all";
+        dot2.className = "w-2.5 h-2.5 rounded-full bg-oriental-vermilion transition-all";
+      }, 1200);
+
+      // Step 3 (2.4s)
+      setTimeout(() => {
+        loadingTextEl.textContent = steps[2];
+        dot2.className = "w-2 h-2 rounded-full bg-oriental-gold/60 transition-all";
+        dot3.className = "w-2.5 h-2.5 rounded-full bg-oriental-vermilion transition-all";
+      }, 2400);
+
+      // Render Deterministic Result (3.6s)
+      setTimeout(() => {
+        try {
+          const resultData = generateDeterministicReading(currentMode, savedUserData, partnerData);
+          renderResult(currentMode, savedUserData, partnerData, resultData);
+          showView('result');
+        } catch (err) {
+          console.error(err);
+          showView('input');
+          showToast("점괘를 계산하는 중 오류가 발생했어요. 다시 시도해 주세요!");
+        }
+      }, 3600);
+    }
+
+    // Render Result Card UI (Clean Symmetrical Hanji Scroll Theme)
+    function renderResult(mode, user, partner, data) {
+      const resBadge = document.getElementById('res-badge');
+      const resModeA = document.getElementById('result-mode-a');
+      const resModeB = document.getElementById('result-mode-b');
+      const ctaBtn = document.getElementById('cta-to-mode-b');
+
+      if (mode === 'A') {
+        resBadge.textContent = "🏮 연분 점괘";
+        resModeA.classList.remove('hidden');
+        resModeB.classList.add('hidden');
+        ctaBtn.classList.remove('hidden');
+
+        document.getElementById('res-a-myname').textContent = user.name;
+        document.getElementById('res-a-element-tag').textContent = data.myElementTag;
+        document.getElementById('res-a-nickname').textContent = `"${data.myNickname.replace(/^"|"$/g, '')}"`;
+        document.getElementById('res-a-my-desc').textContent = data.myDescription;
+
+        // Surnames badges (Clean inline pills)
+        const surnamesContainer = document.getElementById('res-a-surnames');
+        surnamesContainer.innerHTML = data.recommendedSurnames.map(surname => `
+          <span class="px-2.5 py-0.5 rounded-md bg-white border border-[#c83e37]/35 text-[#b8322b] font-serif font-bold text-xs">
+            ${surname.replace(/씨$/, '')}씨
+          </span>
+        `).join('');
+
+        document.getElementById('res-a-initials').textContent = data.recommendedInitials;
+        document.getElementById('res-a-zodiac').textContent = data.recommendedZodiac;
+        document.getElementById('res-a-fill-energy').textContent = data.fillEnergy;
+
+        // Keywords badges
+        const keywordsContainer = document.getElementById('res-a-keywords');
+        keywordsContainer.innerHTML = data.appearanceKeywords.map(kw => `
+          <span class="px-2.5 py-1 rounded-md bg-[#efe9dd]/80 border border-[#e2d5be] text-[#4a3b2c] text-[11px] font-medium">
+            ${kw.startsWith('#') ? kw : '#' + kw}
+          </span>
+        `).join('');
+
+        document.getElementById('res-a-meeting').textContent = data.meetingFortune;
+        document.getElementById('res-a-clash').textContent = data.clashWarning;
+
+      } else {
+        resBadge.textContent = partner.birthUnknown ? "🔤 성명학 궁합" : "🪢 사주·이름 궁합";
+        resModeB.classList.remove('hidden');
+        resModeA.classList.add('hidden');
+        ctaBtn.classList.add('hidden');
+
+        document.getElementById('res-b-myname').textContent = user.name;
+        document.getElementById('res-b-partnername').textContent = partner.name;
+        document.getElementById('res-b-score').textContent = data.score;
+        document.getElementById('res-b-headline').textContent = `"${data.headline.replace(/^"|"$/g, '')}"`;
+        document.getElementById('res-b-name-synergy').textContent = data.nameSynergy;
+        document.getElementById('res-b-chemi-title').textContent = data.chemiTitle;
+        document.getElementById('res-b-saju-chemi').textContent = data.sajuChemistry;
+        document.getElementById('res-b-caution').textContent = data.cautionPoint;
+      }
+    }
+
+    // Mobile-Optimized Save & Share Result Card (Supports Mobile Share Sheet + Fallback Download)
+    async function downloadResultCard() {
+      const card = document.getElementById('capture-card');
+      showToast("한지 점괘서 이미지를 생성하고 있어요...");
+
+      try {
+        const canvas = await html2canvas(card, {
+          backgroundColor: '#f7f3eb',
+          scale: Math.min(window.devicePixelRatio || 2, 3),
+          useCORS: true,
+          logging: false
+        });
+
+        const timestamp = new Date().toISOString().slice(0, 10);
+        const fileName = `운명점지소_점괘서_${timestamp}.png`;
+
+        // Try Mobile Native Share Sheet first (best for iOS Safari & Android Chrome/In-App Browsers)
+        if (navigator.canShare && navigator.share) {
+          const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+          if (blob) {
+            const file = new File([blob], fileName, { type: 'image/png' });
+            if (navigator.canShare({ files: [file] })) {
+              try {
+                await navigator.share({
+                  files: [file],
+                  title: '운명점지소 사주·성명 점괘서',
+                  text: '이름과 사주가 점지해 준 내 연분 점괘서!'
+                });
+                return;
+              } catch (shareErr) {
+                if (shareErr.name === 'AbortError') return; // User cancelled share sheet
+              }
+            }
+          }
+        }
+
+        // Standard Download Fallback
+        const link = document.createElement('a');
+        link.download = fileName;
+        link.href = canvas.toDataURL('image/png');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast("갤러리(다운로드 폴더)에 점괘서가 저장되었습니다!");
+      } catch (err) {
+        showToast("화면 캡처 기능을 이용해 점괘서를 저장해 주세요!");
+      }
+    }
+  </script>
+</body>
+</html>
