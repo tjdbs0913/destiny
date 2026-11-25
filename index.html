@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>운명점지소 (Destiny Pointing House) | 이름 & 사주 궁합</title>
+  <title>운명점지소 (Saju & Name Matchmaker) | 이름 & 사주 궁합</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: 단정한 동양풍 명조체 (Gowun Batang & Noto Serif KR) -->
+  <!-- Google Fonts: 단정하고 기품 있는 동양풍 명조체 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
               950: '#0d0b09',
               900: '#14110f',
               800: '#1e1915',
-              700: '#29221c',
+              700: '#2a221c',
             },
             hanji: {
               50: '#fcfaf5',
@@ -51,8 +51,15 @@
   </script>
 
   <style>
+    /* Full-Viewport Traditional Dark Ebony & Gold Lattice Background */
     html, body {
-      background-color: #0d0b09;
+      min-height: 100vh;
+      background-color: #14110f;
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(200, 169, 110, 0.12) 0%, transparent 55%),
+        linear-gradient(to right, rgba(200, 169, 110, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(200, 169, 110, 0.06) 1px, transparent 1px);
+      background-size: 100% 100%, 28px 28px, 28px 28px;
       color: #f7f2e7;
       font-family: "Gowun Batang", "Noto Serif KR", serif;
       -webkit-tap-highlight-color: transparent;
@@ -60,6 +67,7 @@
       overflow-x: hidden;
       width: 100%;
     }
+
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -67,27 +75,31 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-    /* Prevent iOS Safari Auto-Zoom & Align Inputs Uniformly */
+
+    /* Uniform Mobile Form Input Alignment & iOS Auto-Zoom Prevention */
     input[type="text"],
     input[type="date"],
     select {
       font-size: 16px !important;
       line-height: 1.4;
-      height: 48px;
-      min-height: 48px;
-      box-sizing: border-box;
-    }
-    input[type="date"] {
-      -webkit-appearance: none;
-      appearance: none;
-      display: flex;
-      align-items: center;
+      height: 46px;
+      min-height: 46px;
       width: 100%;
       min-width: 0;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      appearance: none;
     }
+
+    input[type="date"] {
+      display: flex;
+      align-items: center;
+    }
+
     input[type="date"]::-webkit-date-and-time-value {
       text-align: left;
     }
+
     input[type="date"]::-webkit-calendar-picker-indicator {
       filter: invert(0.82) sepia(0.35) saturate(2) hue-rotate(8deg);
       opacity: 0.9;
@@ -95,36 +107,36 @@
       margin-left: auto;
       padding: 4px;
     }
-    /* Mobile Safe Area Support */
-    .safe-top {
-      padding-top: max(1rem, calc(env(safe-area-inset-top) + 0.65rem));
+
+    /* Custom Select Arrow for Clean Alignment */
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23c8a96e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px 16px;
+      padding-right: 36px;
     }
-    .safe-bottom {
-      padding-bottom: max(1.75rem, calc(env(safe-area-inset-bottom) + 1rem));
+
+    /* Traditional Oriental Card Surfaces */
+    .ebony-panel {
+      background: linear-gradient(160deg, rgba(32, 26, 21, 0.96), rgba(20, 17, 15, 0.98));
+      border: 1px solid rgba(200, 169, 110, 0.3);
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.75);
     }
-    /* Oriental Lattice & Hanji Paper Textures */
-    .lattice-bg {
-      background-image:
-        linear-gradient(to right, rgba(200, 169, 110, 0.045) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(200, 169, 110, 0.045) 1px, transparent 1px);
-      background-size: 26px 26px;
-    }
-    .ebony-card {
-      background: linear-gradient(155deg, rgba(34, 28, 23, 0.96), rgba(22, 18, 15, 0.98));
-      border: 1px solid rgba(200, 169, 110, 0.28);
-      box-shadow: 0 10px 26px -8px rgba(0, 0, 0, 0.7);
-    }
+
     .hanji-scroll {
       background-color: #f7f2e7;
       background-image: radial-gradient(rgba(176, 149, 104, 0.16) 1px, transparent 0);
       background-size: 16px 16px;
       color: #231d17;
     }
+
     .inju-stamp {
       border: 1.5px solid #b83227;
       color: #b83227;
       background-color: rgba(184, 50, 39, 0.08);
     }
+
     @keyframes floatLantern {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-6px); }
@@ -134,25 +146,41 @@
     }
   </style>
 </head>
-<body class="min-h-[100dvh] flex justify-center items-start sm:items-center sm:py-5">
+<body class="min-h-screen flex flex-col items-center justify-start sm:justify-center px-3 py-3 sm:py-6">
 
-  <!-- Mobile App Container (Max 440px, dvh adaptive) -->
-  <div id="app-shell" class="w-full max-w-[440px] min-h-[100dvh] sm:min-h-[820px] sm:max-h-[900px] bg-ebony-900 lattice-bg sm:rounded-[30px] sm:border sm:border-gold/30 shadow-2xl relative overflow-x-hidden flex flex-col justify-between">
-
-    <!-- Subtle Warm Glows -->
-    <div class="pointer-events-none fixed sm:absolute top-[-50px] left-1/2 -translate-x-1/2 w-64 h-40 bg-amber-600/15 rounded-full blur-[65px]"></div>
-    <div class="pointer-events-none fixed sm:absolute bottom-[-40px] right-[-30px] w-52 h-52 bg-red-900/20 rounded-full blur-[65px]"></div>
-
-    <!-- Custom Toast Notification (No alert/confirm) -->
-    <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 opacity-0 pointer-events-none translate-y-[-10px] w-[92%] max-w-[380px]">
-      <div class="bg-ebony-800/95 border border-gold/55 text-hanji-100 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-bold backdrop-blur-md">
-        <span class="inju-stamp px-1.5 py-0.5 text-[10px] rounded-sm shrink-0">알림</span>
-        <span id="toast-msg" class="leading-snug">메시지</span>
-      </div>
+  <!-- Toast Notification (No alert/confirm) -->
+  <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 opacity-0 pointer-events-none translate-y-[-10px] w-[92%] max-w-[380px]">
+    <div class="bg-ebony-800/95 border border-gold/55 text-hanji-100 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-bold backdrop-blur-md">
+      <span class="inju-stamp px-1.5 py-0.5 text-[10px] rounded-sm shrink-0">알림</span>
+      <span id="toast-msg" class="leading-snug">메시지</span>
     </div>
+  </div>
+
+  <!-- Image Preview Modal Fallback for Restricted Mobile WebViews -->
+  <div id="image-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="w-full max-w-[380px] bg-ebony-800 border border-gold/45 rounded-2xl p-4 space-y-3 text-center shadow-2xl">
+      <div class="flex items-center justify-between border-b border-gold/20 pb-2">
+        <span class="text-sm font-bold text-gold">📜 점괘서 이미지 저장</span>
+        <button type="button" onclick="closeImageModal()" class="text-stone-400 hover:text-hanji-100 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <p class="text-xs text-stone-300">아래 점괘서 이미지를 길게 눌러(롱터치) 사진첩에 저장하세요!</p>
+      <div class="max-h-[60vh] overflow-y-auto rounded-xl border border-gold/30">
+        <img id="modal-preview-img" src="" alt="사주 점괘서" class="w-full h-auto block" />
+      </div>
+      <button type="button" onclick="closeImageModal()"
+        class="w-full py-2.5 rounded-xl bg-vermilion text-hanji-100 font-bold text-sm">
+        닫기
+      </button>
+    </div>
+  </div>
+
+  <!-- Centered Mobile-First Container (Max 440px) -->
+  <div id="app-shell" class="w-full max-w-[440px] flex flex-col space-y-3 relative z-10">
 
     <!-- Header -->
-    <header class="px-4 sm:px-5 safe-top pb-2.5 flex items-center justify-between relative z-10 border-b border-gold/15">
+    <header class="px-1 py-1.5 flex items-center justify-between border-b border-gold/20">
       <button type="button" onclick="resetToInputView()" class="flex items-center gap-2.5 text-left group active:opacity-80">
         <div class="w-9 h-9 rounded-lg bg-vermilion border border-gold-light/40 flex items-center justify-center shadow-md shadow-red-950/60 shrink-0">
           <span class="font-bold text-hanji-100 text-lg leading-none">緣</span>
@@ -162,22 +190,22 @@
           <span class="block text-[10px] text-gold/80 -mt-0.5 tracking-wide">사주명리 · 성명학 연애점</span>
         </div>
       </button>
-      <div class="px-2.5 py-1 rounded-md bg-ebony-800 border border-gold/30 text-[11px] text-gold font-bold shrink-0">
-        ☯ 사주·이름 궁합
+      <div class="px-2.5 py-1 rounded-md bg-ebony-800/90 border border-gold/35 text-[11px] text-gold font-bold shrink-0">
+        ☯ 만세력 · 발음오행
       </div>
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 px-4 sm:px-5 pt-3 safe-bottom flex flex-col relative z-10 overflow-y-auto no-scrollbar">
+    <main class="w-full flex flex-col">
 
       <!-- ========================================================= -->
-      <!-- VIEW 1 & 2: MAIN & COMPACT INPUT FORM                     -->
+      <!-- VIEW 1 & 2: MAIN & INPUT FORM                             -->
       <!-- ========================================================= -->
-      <section id="view-input" class="flex flex-col space-y-2.5">
+      <section id="view-input" class="flex flex-col space-y-3">
 
-        <!-- Compact Intro Title -->
-        <div class="text-center space-y-1">
-          <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-ebony-800 border border-gold/30 text-[11px] text-gold">
+        <!-- Compact Service Title -->
+        <div class="text-center space-y-1 pt-0.5">
+          <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-ebony-800/90 border border-gold/35 text-[11px] text-gold">
             <span>🔮 취향은 거들 뿐</span>
           </div>
           <h1 class="font-bold text-[19px] sm:text-[21px] text-hanji-100 tracking-tight leading-snug">
@@ -186,16 +214,16 @@
         </div>
 
         <!-- Mode Selector Tabs -->
-        <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-ebony-800 border border-gold/25">
+        <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-ebony-800/90 border border-gold/30">
           <button type="button" id="tab-solo" onclick="switchMode('solo')"
-            class="min-h-[48px] py-1.5 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center bg-vermilion text-hanji-100 border border-gold-light/30 shadow-md active:scale-[0.98]">
-            <span>🔮 나만의 운명 찾기</span>
-            <span class="text-[10px] opacity-85 font-normal">솔로 모드</span>
+            class="min-h-[46px] py-1.5 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center bg-vermilion text-hanji-100 border border-gold-light/35 shadow-md active:scale-[0.98]">
+            <span>🔮 솔로 운명 찾기</span>
+            <span class="text-[10px] opacity-85 font-normal">내 운명의 상대 추천</span>
           </button>
           <button type="button" id="tab-match" onclick="switchMode('match')"
-            class="min-h-[48px] py-1.5 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center text-stone-400 hover:text-hanji-100 active:scale-[0.98]">
-            <span>💞 그 사람과 사주 궁합</span>
-            <span class="text-[10px] opacity-85 font-normal">지정 모드</span>
+            class="min-h-[46px] py-1.5 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center text-stone-400 hover:text-hanji-100 active:scale-[0.98]">
+            <span>💞 그 사람과 궁합 보기</span>
+            <span class="text-[10px] opacity-85 font-normal">지정 상대 사주·이름 궁합</span>
           </button>
         </div>
 
@@ -203,8 +231,8 @@
         <form id="saju-form" onsubmit="handleSubmit(event)" class="space-y-3">
 
           <!-- My Info Panel -->
-          <div class="ebony-card rounded-2xl p-3.5 space-y-3">
-            <div class="flex items-center justify-between border-b border-gold/15 pb-1.5">
+          <div class="ebony-panel rounded-2xl p-4 space-y-3">
+            <div class="flex items-center justify-between border-b border-gold/20 pb-2">
               <span class="font-bold text-sm text-gold flex items-center gap-1.5">
                 <span class="inju-stamp px-1.5 py-0.5 text-[10px] rounded-sm">본인</span>
                 <span>내 사주 명식</span>
@@ -217,12 +245,12 @@
               <div class="col-span-2 min-w-0">
                 <label for="my-name" class="block text-xs text-stone-300 mb-1 font-bold">이름 (한글)</label>
                 <input type="text" id="my-name" placeholder="예: 김지민" maxlength="10" autocomplete="off"
-                  class="w-full px-3 rounded-xl bg-ebony-900/90 border border-gold/25 text-hanji-100 placeholder-stone-500 focus:outline-none focus:border-gold transition" />
+                  class="px-3 rounded-xl bg-ebony-900 border border-gold/30 text-hanji-100 placeholder-stone-500 focus:outline-none focus:border-gold transition" />
               </div>
               <div class="min-w-0">
                 <label for="my-gender" class="block text-xs text-stone-300 mb-1 font-bold">성별</label>
                 <select id="my-gender"
-                  class="w-full px-2.5 rounded-xl bg-ebony-900/90 border border-gold/25 text-hanji-100 focus:outline-none focus:border-gold transition">
+                  class="px-3 rounded-xl bg-ebony-900 border border-gold/30 text-hanji-100 focus:outline-none focus:border-gold transition">
                   <option value="여성">여성</option>
                   <option value="남성">남성</option>
                 </select>
@@ -245,10 +273,10 @@
                 </div>
               </div>
               <input type="date" id="my-birth" value="1999-05-15" min="1940-01-01" max="2026-12-31"
-                class="w-full px-3 rounded-xl bg-ebony-900/90 border border-gold/25 text-hanji-100 focus:outline-none focus:border-gold transition" />
+                class="px-3 rounded-xl bg-ebony-900 border border-gold/30 text-hanji-100 focus:outline-none focus:border-gold transition" />
             </div>
 
-            <!-- Birth Time -->
+            <!-- Birth Hour -->
             <div class="min-w-0">
               <div class="flex items-center justify-between mb-1">
                 <label for="my-time" class="text-xs text-stone-300 font-bold">태어난 시</label>
@@ -258,7 +286,7 @@
                 </label>
               </div>
               <select id="my-time"
-                class="w-full px-3 rounded-xl bg-ebony-900/90 border border-gold/25 text-hanji-100 disabled:opacity-40 focus:outline-none focus:border-gold transition">
+                class="px-3 rounded-xl bg-ebony-900 border border-gold/30 text-hanji-100 disabled:opacity-40 focus:outline-none focus:border-gold transition">
                 <option value="자시">자시 (23:30 ~ 01:29)</option>
                 <option value="축시">축시 (01:30 ~ 03:29)</option>
                 <option value="인시">인시 (03:30 ~ 05:29)</option>
@@ -275,9 +303,9 @@
             </div>
           </div>
 
-          <!-- Target Partner Info Panel (Mode B: match) -->
-          <div id="target-card" class="hidden ebony-card rounded-2xl p-3.5 space-y-3 border-vermilion/45">
-            <div class="flex items-center justify-between border-b border-gold/15 pb-1.5">
+          <!-- Partner Info Panel (Mode B Only) -->
+          <div id="target-card" class="hidden ebony-panel rounded-2xl p-4 space-y-3 border-vermilion/50">
+            <div class="flex items-center justify-between border-b border-gold/20 pb-2">
               <span class="font-bold text-sm text-vermilion flex items-center gap-1.5">
                 <span class="inju-stamp px-1.5 py-0.5 text-[10px] rounded-sm">상대</span>
                 <span>그 사람의 정보</span>
@@ -288,7 +316,7 @@
             <div class="min-w-0">
               <label for="target-name" class="block text-xs text-stone-300 mb-1 font-bold">상대방 이름 (한글)</label>
               <input type="text" id="target-name" placeholder="예: 박서준" maxlength="10" autocomplete="off"
-                class="w-full px-3 rounded-xl bg-ebony-900/90 border border-gold/25 text-hanji-100 placeholder-stone-500 focus:outline-none focus:border-gold transition" />
+                class="px-3 rounded-xl bg-ebony-900 border border-gold/30 text-hanji-100 placeholder-stone-500 focus:outline-none focus:border-gold transition" />
             </div>
 
             <div class="min-w-0">
@@ -300,13 +328,13 @@
                 </label>
               </div>
               <input type="date" id="target-birth" value="1998-08-20" min="1940-01-01" max="2026-12-31"
-                class="w-full px-3 rounded-xl bg-ebony-900/90 border border-gold/25 text-hanji-100 disabled:opacity-40 focus:outline-none focus:border-gold transition" />
+                class="px-3 rounded-xl bg-ebony-900 border border-gold/30 text-hanji-100 disabled:opacity-40 focus:outline-none focus:border-gold transition" />
             </div>
 
             <div class="min-w-0">
               <label for="target-time" class="block text-xs text-stone-300 mb-1 font-bold">상대방 태어난 시 (선택)</label>
               <select id="target-time"
-                class="w-full px-3 rounded-xl bg-ebony-900/90 border border-gold/25 text-hanji-100 disabled:opacity-40 focus:outline-none focus:border-gold transition">
+                class="px-3 rounded-xl bg-ebony-900 border border-gold/30 text-hanji-100 disabled:opacity-40 focus:outline-none focus:border-gold transition">
                 <option value="모름" selected>모름 (생년월일·이름으로 분석)</option>
                 <option value="자시">자시 (23:30 ~ 01:29)</option>
                 <option value="축시">축시 (01:30 ~ 03:29)</option>
@@ -326,29 +354,29 @@
 
           <!-- Submit CTA Button -->
           <button type="submit"
-            class="w-full min-h-[50px] py-3 px-5 rounded-xl bg-gradient-to-r from-[#b83227] to-[#96241b] hover:brightness-110 border border-gold-light/35 text-hanji-100 font-bold text-base tracking-wide shadow-lg shadow-red-950/60 transition active:scale-[0.98]">
+            class="w-full min-h-[50px] py-3 px-5 rounded-xl bg-gradient-to-r from-[#b83227] to-[#96241b] hover:brightness-110 border border-gold-light/40 text-hanji-100 font-bold text-base tracking-wide shadow-lg shadow-red-950/60 transition active:scale-[0.98]">
             <span id="submit-btn-label">🏮 내 운명의 상대 점지받기</span>
           </button>
         </form>
       </section>
 
       <!-- ========================================================= -->
-      <!-- VIEW 3: 3.6s 3-STEP FORTUNE LOADING SCREEN                -->
+      <!-- VIEW 3: 3.6s 3-STAGE FORTUNE LOADING SCREEN               -->
       <!-- ========================================================= -->
-      <section id="view-loading" class="hidden flex-1 flex flex-col items-center justify-center text-center space-y-6 py-10">
+      <section id="view-loading" class="hidden ebony-panel rounded-2xl py-16 px-6 flex flex-col items-center justify-center text-center space-y-6">
         <div class="relative flex items-center justify-center">
-          <div class="w-28 h-28 rounded-full border border-gold/35 animate-ping absolute opacity-25"></div>
-          <div class="w-24 h-24 rounded-full bg-ebony-800 border-2 border-gold/50 flex items-center justify-center shadow-2xl animate-lantern">
+          <div class="w-28 h-28 rounded-full border border-gold/40 animate-ping absolute opacity-25"></div>
+          <div class="w-24 h-24 rounded-full bg-ebony-900 border-2 border-gold/60 flex items-center justify-center shadow-2xl animate-lantern">
             <span class="font-bold text-4xl text-vermilion">命</span>
           </div>
         </div>
 
         <div class="space-y-2 max-w-[290px]">
           <p id="loading-step-text" class="font-bold text-base text-gold transition-opacity duration-300">
-            1. 만세력 사주팔자 산출 중...
+            사주팔자 만세력 산출 중...
           </p>
           <p class="text-xs text-stone-400">
-            천간·지지 오행과 이름의 발음오행을 대조하고 있습니다
+            천간·지지 오행과 이름 초성 발음오행을 대조하고 있습니다
           </p>
         </div>
 
@@ -362,11 +390,11 @@
       <!-- ========================================================= -->
       <!-- VIEW 4: SYMMETRICAL HANJI SCROLL RESULT CARD               -->
       <!-- ========================================================= -->
-      <section id="view-result" class="hidden flex-1 flex flex-col justify-between space-y-3">
+      <section id="view-result" class="hidden flex flex-col space-y-3">
 
         <!-- Shareable Capture Card -->
         <div id="capture-card" class="hanji-scroll rounded-2xl border-2 border-[#c8a96e] shadow-2xl overflow-hidden">
-          <div class="border border-[#c8a96e]/55 m-1.5 rounded-xl px-4 py-5 space-y-4">
+          <div class="border border-[#c8a96e]/60 m-1.5 rounded-xl px-4 py-5 space-y-4">
 
             <!-- Card Header -->
             <div class="flex items-center justify-between border-b border-[#dfd1b6] pb-2.5">
@@ -420,7 +448,7 @@
                 </div>
               </div>
 
-              <!-- 3. Partner Zodiac & Filling Element (Equal Height Cards) -->
+              <!-- 3. Partner Zodiac & Filling Element -->
               <div class="grid grid-cols-2 gap-2.5">
                 <div class="bg-[#ede4d1]/75 border border-[#dfd1b6] rounded-xl p-3 flex flex-col justify-between">
                   <span class="text-[11px] text-[#75532f] block mb-1">찰떡궁합 추천 띠</span>
@@ -519,12 +547,12 @@
           <!-- Save/Share & Restart -->
           <div class="grid grid-cols-2 gap-2.5">
             <button type="button" onclick="saveOrShareCard()"
-              class="min-h-[48px] py-3 px-3 rounded-xl bg-vermilion hover:brightness-110 border border-gold-light/30 text-hanji-100 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-md transition active:scale-[0.98]">
+              class="min-h-[48px] py-3 px-3 rounded-xl bg-vermilion hover:brightness-110 border border-gold-light/35 text-hanji-100 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-md transition active:scale-[0.98]">
               <i data-lucide="share-2" class="w-4 h-4"></i>
               <span>점괘서 저장·공유</span>
             </button>
             <button type="button" onclick="resetToInputView()"
-              class="min-h-[48px] py-3 px-3 rounded-xl bg-ebony-800 hover:bg-ebony-700 border border-gold/30 text-hanji-100 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition active:scale-[0.98]">
+              class="min-h-[48px] py-3 px-3 rounded-xl bg-ebony-800 hover:bg-ebony-700 border border-gold/35 text-hanji-100 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition active:scale-[0.98]">
               <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
               <span>다시 점치기</span>
             </button>
@@ -537,8 +565,12 @@
   </div>
 
   <script>
-    // Initialize Lucide Icons
-    lucide.createIcons();
+    // Safe Lucide Icons Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    });
 
     // Global State
     let activeMode = 'solo'; // 'solo' | 'match'
@@ -552,8 +584,8 @@
       const targetCard = document.getElementById('target-card');
       const submitLabel = document.getElementById('submit-btn-label');
 
-      const activeClasses = "min-h-[48px] py-1.5 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center bg-vermilion text-hanji-100 border border-gold-light/30 shadow-md active:scale-[0.98]";
-      const inactiveClasses = "min-h-[48px] py-1.5 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center text-stone-400 hover:text-hanji-100 active:scale-[0.98]";
+      const activeClasses = "min-h-[46px] py-1.5 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center bg-vermilion text-hanji-100 border border-gold-light/35 shadow-md active:scale-[0.98]";
+      const inactiveClasses = "min-h-[46px] py-1.5 px-2 rounded-lg text-xs sm:text-sm font-bold transition-all flex flex-col items-center justify-center text-stone-400 hover:text-hanji-100 active:scale-[0.98]";
 
       if (mode === 'solo') {
         tabSolo.className = activeClasses;
@@ -587,7 +619,7 @@
       document.getElementById('view-loading').classList.add('hidden');
       document.getElementById('view-result').classList.add('hidden');
       document.getElementById(`view-${viewName}`).classList.remove('hidden');
-      document.querySelector('main').scrollTop = 0;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // Reset to Initial Input View
@@ -622,8 +654,12 @@
       }, 2800);
     }
 
+    function closeImageModal() {
+      document.getElementById('image-modal').classList.add('hidden');
+    }
+
     // =========================================================================
-    // 4. DETERMINISTIC MANSEORYEOK (60-GAPJA SAJU) & PHONETIC FIVE ELEMENTS
+    // 4. DETERMINISTIC REAL 60-GAPJA MANSEORYEOK & PHONETIC FIVE ELEMENTS ENGINE
     // =========================================================================
 
     const STEMS = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
@@ -695,7 +731,7 @@
       'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
     ];
 
-    // Hunminjeongeum Phonetic Five Elements (발음오행)
+    // Hunminjeongeum Pronunciation Five Elements (발음오행)
     function mapChosungToOhaeng(ch) {
       if ('ㄱㄲㅋ'.includes(ch)) return '목';
       if ('ㄴㄷㄸㄹㅌ'.includes(ch)) return '화';
@@ -730,7 +766,7 @@
       };
     }
 
-    // Deterministic FNV-1a Hash for exact input consistency
+    // Deterministic FNV-1a Hash for 100% Identical Input -> Identical Output
     function deterministicHash(str) {
       let hash = 2166136261;
       for (let i = 0; i < str.length; i++) {
@@ -805,7 +841,7 @@
       const dayMasterStem = STEMS[dayStemIdx];
       const dayMasterElement = STEM_ELEMENTS[dayStemIdx];
 
-      // Find Weakest Element (Yongsin / 용신)
+      // Find Deficient Yongsin Element (용신)
       let yongsin = OHAENG_DATA[dayMasterElement].generatedBy;
       let lowestScore = 999;
       for (const el of ['목', '화', '토', '금', '수']) {
@@ -876,13 +912,13 @@
         const yongEl = mySaju.yongsin;
         const nameSupportEl = OHAENG_DATA[myNameOhaeng.lastElement].generates;
 
-        // 2~3 Recommended Surnames & 2 Recommended Initials (No character recommendations)
+        // 2~3 Recommended Surnames & 2 Recommended Initials ONLY (No specific given-name characters)
         const poolA = OHAENG_DATA[yongEl].surnames;
         const poolB = OHAENG_DATA[nameSupportEl].surnames;
         const s1 = poolA[h % poolA.length];
-        const s2 = poolB[(h >> 3) % poolB.length];
+        const s2 = poolB[(h >>> 3) % poolB.length];
         const s3 = poolA[(h + 2) % poolA.length];
-        const recommendedSurnames = Array.from(new Set([s1, s2, s3])).slice(0, 3);
+        const recommendedSurnames = Array.from(new Set([s1, s2, s3].filter(Boolean))).slice(0, 3);
 
         const init1 = OHAENG_DATA[yongEl].initials[0];
         const init2 = OHAENG_DATA[nameSupportEl].initials[0] !== init1
@@ -980,7 +1016,7 @@
           nameSynergy = `두 이름 모두 ${OHAENG_DATA[uEl].label} 발음 기운을 품은 비화(比和) 조합으로, 가치관과 취향이 닮아 처음 만나도 오랜 친구처럼 편안한 호흡을 자랑합니다.`;
         } else {
           nameScore = 74 + (h % 7);
-          nameSynergy = `${myNameOhaeng.cleanName}(${OHAENG_DATA[uEl].label})과 ${targetNameOhaeng.cleanName}(${OHAENG_DATA[tEl].label})의 이름 기운이 서로 다른 매력을 자극해, 각자에게 없는 시각을 열어주는 톡톡 튀는 케미를 만듭니다.`;
+          nameSynergy = `${myNameOhaeng.cleanName}(${OHAENG_DATA[uEl].label})과 ${targetNameOhaeng.cleanName}(${targetNameOhaeng.initials.join('·')}, ${OHAENG_DATA[tEl].label})의 이름 기운이 서로 다른 매력을 자극해, 각자에게 없는 시각을 열어주는 톡톡 튀는 케미를 만듭니다.`;
         }
 
         if (targetInfo.birthUnknown) {
@@ -1052,7 +1088,7 @@
       }
     }
 
-    // 5. Handle Form Submission with 3.6s 3-Stage Mystical Loading Sequence
+    // 5. Handle Form Submission with 3.6s 3-Stage Loading Animation
     function handleSubmit(event) {
       event.preventDefault();
 
@@ -1107,7 +1143,7 @@
         time: myTime
       };
 
-      // Transition to 3.6s 3-Step Loading View
+      // Transition to 3.6s 3-Stage Loading View
       setActiveView('loading');
       const stepTextEl = document.getElementById('loading-step-text');
       const dot1 = document.getElementById('dot-1');
@@ -1115,9 +1151,9 @@
       const dot3 = document.getElementById('dot-3');
 
       const loadingSteps = [
-        "1. 만세력 사주팔자 산출 중...",
-        "2. 이름 발음오행 상생 분석 중...",
-        "3. 천생연분 점괘서 작성 중..."
+        "사주팔자 만세력 산출 중...",
+        "이름 초성 발음오행 분석 중...",
+        "천생연분 점괘를 짚어내는 중..."
       ];
 
       // 0.0s: Step 1
@@ -1171,9 +1207,9 @@
       document.getElementById('solo-my-desc').textContent = data.myDescription;
 
       const surnamesEl = document.getElementById('solo-surnames');
-      surnamesEl.innerHTML = data.recommendedSurnames.map(s => `
+      surnamesEl.innerHTML = (data.recommendedSurnames || []).filter(Boolean).map(s => `
         <span class="px-2.5 py-0.5 rounded-md bg-white border border-[#b83227]/35 text-[#b83227] font-bold text-xs">
-          ${s.replace(/씨$/, '')}씨
+          ${String(s).replace(/씨$/, '')}씨
         </span>
       `).join('');
 
@@ -1209,9 +1245,14 @@
       document.getElementById('match-caution').textContent = data.caution;
     }
 
-    // 8. Save or Share Result Card Image (Mobile Web Share API + PNG Download Fallback)
+    // 8. Save or Share Result Card Image (Web Share API + Download + Long-Press Modal Fallback)
     async function saveOrShareCard() {
       const cardEl = document.getElementById('capture-card');
+      if (typeof html2canvas !== 'function') {
+        showToast("기기 화면 캡처 기능을 이용해 점괘서를 저장해 주세요!");
+        return;
+      }
+
       showToast("한지 점괘서 이미지를 생성하고 있습니다...");
 
       try {
@@ -1224,7 +1265,9 @@
 
         const dateTag = new Date().toISOString().slice(0, 10);
         const fileName = `운명점지소_점괘서_${dateTag}.png`;
+        const dataUrl = canvas.toDataURL('image/png');
 
+        // 1) Try Native Mobile Web Share API
         if (navigator.canShare && navigator.share) {
           const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
           if (blob) {
@@ -1244,14 +1287,23 @@
           }
         }
 
-        const downloadLink = document.createElement('a');
-        downloadLink.download = fileName;
-        downloadLink.href = canvas.toDataURL('image/png');
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-        showToast("갤러리(다운로드 폴더)에 점괘서가 저장되었습니다!");
+        // 2) Try Direct Download + Open Preview Modal for Mobile In-App Browsers
+        try {
+          const downloadLink = document.createElement('a');
+          downloadLink.download = fileName;
+          downloadLink.href = dataUrl;
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+        } catch (dlErr) {
+          // Ignore download restriction in sandboxed iframe
+        }
+
+        document.getElementById('modal-preview-img').src = dataUrl;
+        document.getElementById('image-modal').classList.remove('hidden');
+        showToast("점괘서 이미지가 준비되었습니다!");
       } catch (err) {
+        console.error(err);
         showToast("기기 화면 캡처 기능을 이용해 점괘서를 저장해 주세요!");
       }
     }
